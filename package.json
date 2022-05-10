@@ -1,0 +1,26 @@
+{
+  "name": "introduccion-api",
+  "version": "1.0.0",
+  "description": "Practica de Express y API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BarayAlberto/Introduccion-API.git"
+  },
+  "keywords": [
+    "Express",
+    "API"
+  ],
+  "author": "Alberto Baray",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BarayAlberto/Introduccion-API/issues"
+  },
+  "homepage": "https://github.com/BarayAlberto/Introduccion-API#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
