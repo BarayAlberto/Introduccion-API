@@ -53,7 +53,7 @@ const router = app => {
     
         pool.query('DELETE FROM users WHERE id = ?', id, (error, result) => {
             if(error) throw error;
-            response.send('User deleted');
+            response.send('User  deleted');
         });
     });
 
