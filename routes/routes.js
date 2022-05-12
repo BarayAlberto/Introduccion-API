@@ -35,4 +35,29 @@ const router = app{
             renspose.status(201).send(`User added with ID: ${result.insertID}`);
         });
     });
+
+    //Actualizar un usuario ya existente
+    app.put('/users/:id', (request, response) =>{ 
+        const id = request(params.id);
+
+        pool.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) =>{
+            if(error) throw error;
+
+            response.send('User updated succesfully');
+        });
+    });
+
+    //Eliminar un usuario
+    app.delete('/users/:id', (request, response) =>{
+        const id = request.params.id;
+    
+        pool.query('DELETE FROM users WHERE id = ?', id, (error, result) => {
+            if(error) throw error;
+            response.send('User deleted');
+        });
+    });
+
 }
+
+//importar el router
+module.exports = router;
