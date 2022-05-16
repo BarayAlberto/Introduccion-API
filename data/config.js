@@ -1,15 +1,20 @@
-const mysql = require('mysql');
+const mysql = require('mssql');
 
 //Credenciales de conection a base de datos
 const config = {
-    host:'localhost',
+    server:'DESKTOP-RVUJKO9',
     user:'root',
-    password:'betocampeon',
-    database:'api',
+    password:'root',
+    database:'apis',
+    options: {
+        "enableArithAbort": true,
+        "encrypt": false,
+    },
 };
 
-//Crear la pool de MySQL
+/*//Crear la pool de MySQL
 const pool = mysql.createPool(config);
 
 //Exportar el poo
-module.exports = pool;
+module.exports = pool;*/
+module.exports = config;

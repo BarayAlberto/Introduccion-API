@@ -1,4 +1,5 @@
-const pool = require('../data/config');
+const mssql = require('mssql');
+const config = require('../data/config');
 
 //ruta de la app
 const router = app => {
@@ -10,50 +11,84 @@ const router = app => {
     });
     //mostrar todos los usuarios
     app.get('/users', (request, response) => {
-        pool.query('SELECT * FROM USERS', (error, result) => {
-            if(error) throw error;
+        mssql.connect(config, function(err){
+            if(err) console.log(err);
 
-            response.send(result);
+            var request = new mssql.Request();
+
+            request.query('select * from users', function (err, results){
+                if(err) console.log(err)
+
+                response.send(results);
+            });
         });
     });
-    //Mostrar un solo usuario por ID
+
     app.get('/users/:id', (request, response) => {
-        const id = request.params.id;
+        mssql.connect(config, function(err){
 
-        pool.query('SELECT * FROM users WHERE id = ?', id, (error, result) =>{
-            if(error) throw error;
+            const id = request.params.id;
 
-            response.send(result);
+            if(err) console.log(err);
+
+            var req = new mssql.Request();
+
+            req.query("select * from users where id = " + id, function (err, results){
+                if(err) console.log(err)
+
+                response.send(results);
+            });
         });
     });
 
-    //Agregar un nuevo usuario
     app.post('/users', (request, response) => {
-        pool.query('INSERT INTO users SET ?', request.body, (error, result) => {
-            if(error) throw error;
+        mssql.connect(config, function(err){
 
-            renspose.status(201).send(`User added with ID: ${result.insertID}`);
+            const id = request.params.id;
+
+            if(err) console.log(err);
+
+            var req = new mssql.Request();
+
+            req.query("INSERT INTO users SET ?",request.body, function (err, results){
+                if(err) console.log(err)
+
+                renspose.status(201).send(`User added with ID: ${result.insertID}`);
+            });
         });
     });
 
-    //Actualizar un usuario ya existente
-    app.put('/users/:id', (request, response) =>{ 
-        const id = request(params.id);
+    app.put('/users/:id', (request, response) => {
+        mssql.connect(config, function(err){
 
-        pool.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) =>{
-            if(error) throw error;
+            const id = request.params.id;
 
-            response.send('User updated succesfully');
+            if(err) console.log(err);
+
+            var req = new mssql.Request();
+
+            req.query("INSERT INTO users SET ? WHERE Id = "+id, [request.body, id], function (err, results){
+                if(err) console.log(err)
+
+                response.send('User updated succesfully');
+            });
         });
     });
 
-    //Eliminar un usuario
-    app.delete('/users/:id', (request, response) =>{
-        const id = request.params.id;
-    
-        pool.query('DELETE FROM users WHERE id = ?', id, (error, result) => {
-            if(error) throw error;
-            response.send('User  deleted');
+    app.delete('/users/:id', (request, response) => {
+        mssql.connect(config, function(err){
+
+            const id = request.params.id;
+
+            if(err) console.log(err);
+
+            var req = new mssql.Request();
+
+            req.query("DELETE FROM users WHERE Id = "+id, function (err, results){
+                if(err) console.log(err)
+
+                response.send('User deleted');
+            });
         });
     });
 
